@@ -7,7 +7,7 @@ st.header("Usahawan Dashboard")
 
 df = funcs.process_data(funcs.load_dataset("data/Data Usahawan.xlsx"))
 
-st.write(df)
+# st.write(df)
 
 col1, col2, col3, col4 = st.columns(4)
 

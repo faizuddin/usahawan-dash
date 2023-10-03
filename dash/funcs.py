@@ -15,6 +15,8 @@ def process_data(dataframe):
 
     # Calculate age by IC number
     ic = df["No K/P"].str.strip('[]')
+    ic = ic.astype(str)
+
     df["Umur"] = ic.astype(str).str[:2]
 
     # drop invalid IC numbers

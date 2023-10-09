@@ -1,14 +1,14 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import funcs
+import funcs_1
 
 import plotly.express as px
 
 st.header("KKDW Usahawan Dashboard")
 st.sidebar.header("Analisa Data Usahawan")
 
-df = funcs.process_data(funcs.load_dataset("../data/Data Usahawan.xlsx"))
+df = funcs_1.process_data(funcs_1.load_dataset("../data/Data Usahawan.xlsx"))
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -17,11 +17,11 @@ with col1:
    st.metric("Bilangan rekod", value=val)
 
 with col2:
-   rows = funcs.calc_freq(df, "Agensi")
+   rows = funcs_1.calc_freq(df, "Agensi")
    st.metric("Agensi terbesar", value=rows.iloc[0]["Agensi"])
 
 with col3:
-   rows = funcs.calc_freq(df, "Agensi")
+   rows = funcs_1.calc_freq(df, "Agensi")
    st.metric("Agensi terkecil", value=rows.iloc[-1]["Agensi"])
 
 with col4:

@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import funcs_1
+from pathlib import Path
 
 import plotly.express as px
 
@@ -13,7 +14,8 @@ st.set_page_config(
 st.header("KKDW Usahawan Dashboard")
 st.sidebar.header("Analisa Data Usahawan")
 
-df = funcs_1.process_data(funcs_1.load_dataset("../data/Data Usahawan.xlsx"))
+path = Path("../data")/"Data Usahawan.xlsx"
+df = funcs_1.process_data(funcs_1.load_dataset(path))
 
 col1, col2, col3, col4 = st.columns(4)
 

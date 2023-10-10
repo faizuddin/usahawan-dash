@@ -5,6 +5,8 @@ import funcs_2
 import plotly.express as px
 import matplotlib.pyplot as plt
 
+from pathlib import Path
+
 from wordcloud import WordCloud
 
 st.set_page_config(
@@ -16,7 +18,8 @@ st.set_page_config(
 st.title("KKDW Usahawan Dashboard")
 st.sidebar.header("Persepsi Masyarakat")
 
-df = funcs_2.process_data(funcs_2.load_dataset("../data/clean-with-sentiment.csv"))
+path = Path("../data")/"clean-with-sentiment.csv"
+df = funcs_2.process_data(funcs_2.load_dataset(path))
 
 # st.write(df)
 st.header("Demografik")

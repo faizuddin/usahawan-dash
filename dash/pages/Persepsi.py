@@ -26,15 +26,16 @@ st.header("Demografik")
 col1, col2, col3 = st.columns(3)
 
 
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4, col5, col6 = st.columns(6)
 
 col1.metric("Bilangan rekod", value=len(df), delta="-312 (tidak sah)")
 col2.metric("Pempamer", len(df[df["Bentuk Penyertaan di KUD"]=="Pempamer"]))
 col3.metric("Pengunjung", len(df[df["Bentuk Penyertaan di KUD"]=="Pengunjung"]))
 col4.metric("Purata Umur", value="%.2f" % round(sum(df["Umur"])/len(df),2))
 
-gender_ratio = df["Jantina"].value_counts(normalize=True).mul(100).round(0)
-col5.metric("Nisbah Jantina", value="%s (L) : %s (W)" % (int(gender_ratio[0]),int(gender_ratio[1])))
+gender_ratio = df["Jantina"].value_counts(normalize=True).mul(100).round(2)
+col5.metric("Lelaki", value="%s " % (gender_ratio[0]))
+col6.metric("Wanita", value="%s " % (gender_ratio[1]))
 
 col1, col2, col3 = st.columns(3)
 
@@ -100,7 +101,8 @@ with col1:
 with col2:
     st.subheader("Awan Perkataan")
     st.write(
-    """*Wordcloud* di bawah menunjukkan contoh perkataan-perkataan yang digunakan oleh pempamer dan pengunjung di dalam survey."""
+    """*Wordcloud* di bawah menunjukkan contoh perkataan-perkataan yang digunakan oleh pempamer dan pengunjung di dalam survey mengikut sentimen.
+    Kekerapan penggunaan perkataan diwakili oleh saiz."""
     )
 
     tmp1 = df[df["Sentiment"]=="positive"]

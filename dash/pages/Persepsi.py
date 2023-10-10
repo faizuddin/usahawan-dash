@@ -33,9 +33,9 @@ col2.metric("Pempamer", len(df[df["Bentuk Penyertaan di KUD"]=="Pempamer"]))
 col3.metric("Pengunjung", len(df[df["Bentuk Penyertaan di KUD"]=="Pengunjung"]))
 col4.metric("Purata Umur", value="%.2f" % round(sum(df["Umur"])/len(df),2))
 
-gender_ratio = df["Jantina"].value_counts(normalize=True).mul(100).round(2)+"%"
-col5.metric("Lelaki", value="%s " % (gender_ratio[0]))
-col6.metric("Wanita", value="%s " % (gender_ratio[1]))
+gender_ratio = df["Jantina"].value_counts(normalize=True).mul(100).round(2)
+col5.metric("Lelaki", value="%s%" % (gender_ratio[0]))
+col6.metric("Wanita", value="%s%" % (gender_ratio[1]))
 
 col1, col2, col3 = st.columns(3)
 

@@ -5,6 +5,11 @@ import funcs_1
 
 import plotly.express as px
 
+st.set_page_config(
+    page_title="KKDW Dashboard",
+    page_icon="📈",
+)
+
 st.header("KKDW Usahawan Dashboard")
 st.sidebar.header("Analisa Data Usahawan")
 
@@ -40,16 +45,16 @@ fig = px.bar(dff, x="Agensi", y="Bilangan", color="Kategori Usahawan")
 st.plotly_chart(fig, theme="streamlit")
 
 
-col1, col2  = st.columns(2)
+# col1, col2  = st.columns(2)
 
-with col1:
-   tmp = df["Kategori Usahawan"].value_counts()
-   fig = px.pie(tmp, values="Kategori Usahawan")
+# with col1:
+#    tmp = df["Kategori Usahawan"].value_counts()
+#    fig = px.pie(tmp, values="Kategori Usahawan")
 
-   st.plotly_chart(fig, theme="streamlit", use_container_width=True, names="Kategori Usahawan", title="Pecahan Mengikut Kategori")
+#    st.plotly_chart(fig, theme="streamlit", use_container_width=True, names="Kategori Usahawan", title="Pecahan Mengikut Kategori")
 
-with col2:
-   tmp = df["Jantina"].value_counts()
-   fig = px.pie(tmp, values="Jantina")
+# with col2:
+#    tmp = df["Jantina"].value_counts()
+#    fig = px.pie(tmp, values="Jantina")
 
-   st.plotly_chart(fig, theme="streamlit", use_container_width=True, names="Jantina", title="Pecahan Mengikut Jantina")
+#    st.plotly_chart(fig, theme="streamlit", use_container_width=True, names="Jantina", title="Pecahan Mengikut Jantina")

@@ -8,10 +8,11 @@ import plotly.express as px
 
 st.set_page_config(
     page_title="KKDW Dashboard",
-    page_icon="📈",
+    page_icon="📊",
+    layout="wide",
 )
 
-st.header("KKDW Usahawan Dashboard")
+st.title("KKDW Usahawan Dashboard")
 st.sidebar.header("Analisa Data Usahawan")
 
 path = Path("./data")/"Data Usahawan.xlsx"

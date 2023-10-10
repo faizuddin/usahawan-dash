@@ -11,7 +11,7 @@ from wordcloud import WordCloud
 
 st.set_page_config(
     page_title="KKDW Dashboard",
-    page_icon="📈",
+    page_icon="	📊",
     layout="wide",
 )
 
@@ -28,14 +28,14 @@ col1, col2, col3 = st.columns(3)
 
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 
-col1.metric("Bilangan rekod", value=len(df), delta="-312 (tidak sah)")
-col2.metric("Pempamer", len(df[df["Bentuk Penyertaan di KUD"]=="Pempamer"]))
-col3.metric("Pengunjung", len(df[df["Bentuk Penyertaan di KUD"]=="Pengunjung"]))
-col4.metric("Purata Umur", value="%.2f" % round(sum(df["Umur"])/len(df),2))
+col1.metric("📁 Bilangan rekod", value=len(df), delta="-312 (tidak sah)")
+col2.metric("🛒 Pempamer", len(df[df["Bentuk Penyertaan di KUD"]=="Pempamer"]))
+col3.metric("🛍️ Pengunjung", len(df[df["Bentuk Penyertaan di KUD"]=="Pengunjung"]))
+col4.metric("🎂 Purata Umur", value="%.2f" % round(sum(df["Umur"])/len(df),2))
 
 gender_ratio = df["Jantina"].value_counts(normalize=True).mul(100).round(2).astype(str)+"%"
-col5.metric("Lelaki", value="%s " % (gender_ratio[0]))
-col6.metric("Wanita", value="%s " % (gender_ratio[1]))
+col5.metric("♂️ Lelaki", value="%s " % (gender_ratio[0]))
+col6.metric("♀️ Wanita", value="%s " % (gender_ratio[1]))
 
 col1, col2, col3 = st.columns(3)
 
@@ -47,6 +47,7 @@ with col1:
         y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
     fig = px.histogram(df, x="Jantina", color=y_data)
+    fig.update_layout(yaxis_title="Bilangan") 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with col2:
@@ -56,6 +57,7 @@ with col2:
     with col21:
         y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
     fig = px.histogram(df, x="Umur", color=y_data)
+    fig.update_layout(yaxis_title="Bilangan") 
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
@@ -66,15 +68,36 @@ with col3:
     with col31:
         y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
     fig = px.histogram(df, x="Negeri", color=y_data)
+    fig.update_layout(yaxis_title="Bilangan") 
     
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 st.divider()
 # ------------------------------
-st.header("Pengetahuan")
+st.header("Manfaat")
 col1, col2, col3 = st.columns(3)
 
+with col1:
+    st.subheader("Penerima Manfaat")
+    col11, col12 = st.columns(2)
+    with col11:
+        y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bentuk Penyertaan di KUD"])
+    
+    fig = px.histogram(df, x="Adakah anda Penerima Manfaat?", color=y_data)
+    fig.update_layout(yaxis_title="Bilangan") 
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+with col2:
+    st.subheader("Jenis Bantuan")
+    col21, col22 = st.columns(2)
+    with col21:
+        y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bidang Perniagaan", "Modal Sebelum Mendapat Geran", "Keuntungan Bulanan"])
+    
+    dff = df[df["Adakah anda Penerima Manfaat?"]=="Ya"]
+    fig = px.histogram(dff, x="Jenis Bantuan", color=y_data)
+    fig.update_layout(yaxis_title="Bilangan") 
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 
@@ -96,13 +119,14 @@ with col1:
         y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
     fig = px.histogram(df, x="Sentiment", color=y_data)
+    fig.update_layout(yaxis_title="Bilangan") 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with col2:
     st.subheader("Awan Perkataan")
     st.write(
-    """*Wordcloud* di bawah menunjukkan contoh perkataan-perkataan yang digunakan oleh pempamer dan pengunjung di dalam survey mengikut sentimen.
-    Kekerapan penggunaan perkataan diwakili oleh saiz."""
+    """*Wordcloud* di bawah menunjukkan contoh perkataan-perkataan yang digunakan oleh pempamer dan pengunjung di dalam survey mengikut.
+    Size perkataan mewakili frekuensi penggunaan di dalam survey."""
     )
 
     tmp1 = df[df["Sentiment"]=="positive"]
@@ -126,13 +150,13 @@ with col2:
         else:
             topic = Negatif
 
-        wordcloud = WordCloud(width=800, height=400).generate(topic)
+        wordcloud = WordCloud(width=800, height=500).generate(topic)
         return wordcloud
 
     wordcloud = create_wordcloud(topic)
 
-    # Display the generated image:
-    fig, ax = plt.subplots(figsize = (20, 10))
+    # Display the generated wordcloud image:
+    fig, ax = plt.subplots(figsize = (20, 20))
     ax.imshow(wordcloud)
     plt.axis("off")
     st.pyplot(fig)

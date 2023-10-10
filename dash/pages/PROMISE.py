@@ -1,6 +1,14 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import dash.funcs_1 as funcs_1
 
+st.set_page_config(
+    page_title="KKDW Dashboard",
+    page_icon="	📊",
+    layout="wide",
+)
+
+st.title("KKDW Usahawan Dashboard")
 st.sidebar.header("Persepsi Penerima Manfaat")
+
+st.header("In progress...")

@@ -123,11 +123,6 @@ with col1:
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with col2:
-    st.subheader("Awan Perkataan")
-    st.write(
-    """*Wordcloud* di bawah menunjukkan contoh perkataan-perkataan yang digunakan oleh pempamer dan pengunjung di dalam survey mengikut.
-    Size perkataan mewakili frekuensi penggunaan di dalam survey."""
-    )
 
     tmp1 = df[df["Sentiment"]=="positive"]
     Positif = ''.join(tmp1["Adakah anda mempunyai cadangan/ penambahbaikan?"])
@@ -136,6 +131,42 @@ with col2:
     tmp3 = df[df["Sentiment"]=="negative"]
     Negatif = ''.join(tmp3["Adakah anda mempunyai cadangan/ penambahbaikan?"])
 
+    st.subheader("Ramalan Sentimen")
+    # load prediction model
+    sent_model = funcs_2.load_model("tiny-bert")
+    with st.form("sentiment_example"):
+        st.write("""Ramal kebarangkalian sentimen komen-komen dari survey pempamer dan pengunjung di Mini KUD Pelangai 2023.
+        """)
+        text = st.selectbox("Pilih komen: ", df["Adakah anda mempunyai cadangan/ penambahbaikan?"])
+        
+        # Every form must have a submit button.
+        submitted = st.form_submit_button("Ramal sentimen")
+
+        if submitted:
+            # do prediction
+            preds = sent_model.predict_proba([text])
+            prob_pos = [p["positive"] for p in preds]
+            prob_neu = [p["neutral"] for p in preds]
+            prob_neg = [p["negative"] for p in preds]
+
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                st.metric(label="Positif", value="%.4f" % prob_pos[0])
+            
+            with col2:
+                st.metric(label="Neutral", value="%.4f" % prob_neu[0])
+            
+            with col3:
+                st.metric(label="Negatif", value="%.4f" % prob_neg[0])
+
+
+    st.subheader("Awan Perkataan")
+    st.write(
+    """*Wordcloud* di bawah menunjukkan perkataan-perkataan yang digunakan oleh pempamer dan pengunjung di dalam survey mengikut.
+    Size huruf mewakili frekuensi penggunaan perkataan tersebut di dalam survey."""
+    )
+    
     col21, col22 = st.columns(2)
 
     with col21:

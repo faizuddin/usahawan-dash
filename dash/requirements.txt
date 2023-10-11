@@ -3,5 +3,5 @@ wordcloud==1.9.2
 openpyxl==3.0.10
 malaya==5.0
 tensorflow==2.14.0
-tensorflow-probability==0.22.0
+tensorflow-probability==0.14.0
 torchlibrosa==0.1.0

@@ -18,7 +18,7 @@ st.set_page_config(
 st.title("KKDW Usahawan Dashboard")
 st.sidebar.header("Persepsi Masyarakat")
 
-path = Path("./data")/"clean-with-sentiment.csv"
+path = Path("../data")/"clean-with-sentiment.csv"
 df = funcs_2.process_data(funcs_2.load_dataset(path))
 
 # st.write(df)
@@ -98,6 +98,14 @@ with col2:
     fig = px.histogram(dff, x="Jenis Bantuan", color=y_data)
     fig.update_layout(yaxis_title="Bilangan") 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+with col3:
+    st.subheader("Hubungkait antara modal sebelum dan nilai geran")
+    st.write(""" Andaian *(H0)*: Nilai bantuan geran tidak bergantung kepada modal sebelum menerima bantuan.""")
+
+    col31, col32 = st.columns(2)
+    with col31:
+        var = st.selectbox("Pilih input: ", ["Modal Sebelum Mendapat Geran", "Keuntungan Bulanan"])
 
 
 

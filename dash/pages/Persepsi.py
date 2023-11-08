@@ -19,9 +19,9 @@ st.title("KKDW Usahawan Dashboard")
 st.sidebar.header("Persepsi Masyarakat")
 
 
-path = Path("data") / "clean-with-sentiment.csv"
+# path = Path("data") / "clean-with-sentiment.csv"
 
-# path = "data/clean-with-sentiment.csv"
+path = "./data/clean-with-sentiment.csv"
 df = funcs_2.process_data(funcs_2.load_dataset(path))
 
 # st.write(df)

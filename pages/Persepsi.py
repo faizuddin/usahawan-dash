@@ -44,7 +44,7 @@ col6.metric("♀️ Wanita", value="%s " % (gender_ratio[1]))
 
 col1, col2 = st.columns(2)
 
-bin_width= 20
+bin_width= 10
 nbins = math.ceil((df["Umur"].max() - df["Umur"].min()) / bin_width)
 
 # with col1:

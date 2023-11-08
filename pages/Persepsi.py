@@ -17,7 +17,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("KKDW Usahawan Dashboard")
+st.title("Dashboard Tinjauan Transformasi + Reformasi Ekosistem Usahawan@KKDW")
 st.sidebar.header("Persepsi Masyarakat")
 
 

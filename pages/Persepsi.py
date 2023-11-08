@@ -73,7 +73,7 @@ with col1:
 
     col21, col22 = st.columns(2)
     with col21:
-        y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
+        y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
     fig = px.histogram(df, x="Umur", color=y_data, nbins=10)
     fig.update_layout(yaxis_title="Bilangan", bargap=0.15) 
@@ -85,7 +85,7 @@ with col2:
 
     col31, col32 = st.columns(2)
     with col31:
-        y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
+        y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?", ])
     fig = px.histogram(df, x="Negeri", color=y_data)
     fig.update_layout(yaxis_title="Bilangan") 
     

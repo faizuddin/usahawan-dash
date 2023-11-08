@@ -75,7 +75,7 @@ with col1:
     with col21:
         y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
-    fig = px.histogram(df, x="Umur", color=y_data)
+    fig = px.histogram(df, x="Umur", color=y_data, nbins=10)
     fig.update_layout(yaxis_title="Bilangan", bargap=0.15) 
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)

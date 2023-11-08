@@ -10,7 +10,7 @@ def load_dataset(filepath):
 
 def process_data(dataframe):
     df = dataframe
-    # df = df.drop(columns=["Unnamed: 0"])
+    df = df.drop(columns=["Unnamed: 0"])
     return df
 
 def stats_test(dataframe, idx, cols):

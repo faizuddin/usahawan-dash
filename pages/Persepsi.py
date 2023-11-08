@@ -50,21 +50,10 @@ with col1:
     with col11:
         y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
-    fig = px.histogram(df, x="Jantina")
+    fig = px.histogram(df, x="Jantina", color=y_data)
     fig.update_layout(yaxis_title="Bilangan") 
-    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-    # fig.add_trace(go.Scatter(
-    # x=df.index, 
-    # y=df['count'],
-    # text=df['count'],
-    # mode='text',
-    # textposition='top center',
-    # textfont=dict(
-    #     size=18,
-    # ),
-    # showlegend=False
-# ))
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 with col2:
@@ -73,6 +62,7 @@ with col2:
     col21, col22 = st.columns(2)
     with col21:
         y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
+    
     fig = px.histogram(df, x="Umur", color=y_data)
     fig.update_layout(yaxis_title="Bilangan") 
 

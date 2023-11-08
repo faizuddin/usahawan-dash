@@ -5,6 +5,7 @@ import funcs_2
 import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
+import math
 
 from pathlib import Path
 
@@ -41,34 +42,37 @@ gender_ratio = df["Jantina"].value_counts(normalize=True).mul(100).round(2).asty
 col5.metric("♂️ Lelaki", value="%s " % (gender_ratio[0]))
 col6.metric("♀️ Wanita", value="%s " % (gender_ratio[1]))
 
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
+
+bin_width= 20
+nbins = math.ceil((df["Umur"].max() - df["Umur"].min()) / bin_width)
+
+# with col1:
+#     st.subheader("Jantina")
+
+#     col11, col12 = st.columns(2)
+#     with col11:
+#         y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
+
+#     fig = px.histogram(df, x="Jantina", color=y_data)
+#     fig.update_layout(yaxis_title="Bilangan") 
+
+#     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
 
 with col1:
-    st.subheader("Jantina")
-
-    col11, col12 = st.columns(2)
-    with col11:
-        y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
-
-    fig = px.histogram(df, x="Jantina", color=y_data)
-    fig.update_layout(yaxis_title="Bilangan") 
-
-    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
-
-
-with col2:
     st.subheader("Umur")
 
     col21, col22 = st.columns(2)
     with col21:
         y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
-    
-    fig = px.histogram(df, x="Umur", color=y_data)
-    fig.update_layout(yaxis_title="Bilangan") 
+
+    fig = px.histogram(df, x="Umur", color=y_data, nbins=nbins)
+    fig.update_layout(yaxis_title="Bilangan", bargap=0.03) 
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-with col3:
+with col2:
     st.subheader("Negeri")
 
     col31, col32 = st.columns(2)

@@ -22,20 +22,18 @@ st.sidebar.header("Data Pelangai 2023")
 
 st.subheader("Tinjauan persepsi masyarakat di Pelangai, Pahang bagi program-program ekosistem Usahawan@KKDW pada 30 September - 1 October 2023")
 
-
-# path = Path("data") / "clean-with-sentiment.csv"
-
 path = "clean-with-sentiment.csv"
 df = funcs_2.process_data(funcs_2.load_dataset(path))
 
 # st.write(df)
-st.header("Demografik")
+st.header("Demografi")
 col1, col2, col3 = st.columns(3)
 
 
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 
-col1.metric("📁 Bilangan rekod", value=len(df), delta="-312 (tidak sah)")
+# col1.metric("📁 Bilangan rekod", value=len(df), delta="-312 (tidak sah)")
+col1.metric("📁 Bilangan rekod", value=len(df))
 col2.metric("🛒 Pempamer", len(df[df["Bentuk Penyertaan di KUD"]=="Pempamer"]))
 col3.metric("🛍️ Pengunjung", len(df[df["Bentuk Penyertaan di KUD"]=="Pengunjung"]))
 col4.metric("🎂 Purata Umur", value="%.2f" % round(sum(df["Umur"])/len(df),2))
@@ -44,10 +42,18 @@ gender_ratio = df["Jantina"].value_counts(normalize=True).mul(100).round(2).asty
 col5.metric("♂️ Lelaki", value="%s " % (gender_ratio[0]))
 col6.metric("♀️ Wanita", value="%s " % (gender_ratio[1]))
 
+# -----------------------------------------------
+st.divider()
+st.subheader("Jadual Data")
+st.dataframe(df, hide_index=False, use_container_width=True)
+
+# -----------------------------------------------
+st.divider()
+
 col1, col2 = st.columns(2)
 
 bin_width= 10
-nbins = math.ceil((df["Umur"].max() - df["Umur"].min()) / bin_width)
+nbins = math.ceil((df["Umur"].max() - 18) / bin_width)
 
 # with col1:
 #     st.subheader("Jantina")
@@ -67,10 +73,10 @@ with col1:
 
     col21, col22 = st.columns(2)
     with col21:
-        y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
+        y_data = st.selectbox("Pilih input: ", ["Jantina", "Negeri", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
-    fig = px.histogram(df, x="Umur", color=y_data, nbins=nbins)
-    fig.update_layout(yaxis_title="Bilangan", bargap=0.03) 
+    fig = px.histogram(df, x="Umur", color=y_data)
+    fig.update_layout(yaxis_title="Bilangan", bargap=0.15) 
 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
@@ -79,7 +85,7 @@ with col2:
 
     col31, col32 = st.columns(2)
     with col31:
-        y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
+        y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
     fig = px.histogram(df, x="Negeri", color=y_data)
     fig.update_layout(yaxis_title="Bilangan") 
     
@@ -89,13 +95,13 @@ with col2:
 st.divider()
 # ------------------------------
 st.header("Manfaat")
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Penerima Manfaat")
     col11, col12 = st.columns(2)
     with col11:
-        y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bentuk Penyertaan di KUD"])
+        y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri"])
     
     fig = px.histogram(df, x="Adakah anda Penerima Manfaat?", color=y_data)
     fig.update_layout(yaxis_title="Bilangan") 
@@ -112,14 +118,28 @@ with col2:
     fig.update_layout(yaxis_title="Bilangan") 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-with col3:
-    st.subheader("Hubungkait antara modal sebelum dan nilai geran")
-    st.write(""" Andaian *(H0)*: Nilai bantuan geran tidak bergantung kepada modal sebelum menerima bantuan.""")
+st.divider()
+st.header("Hubungkait")
 
-    col31, col32 = st.columns(2)
-    with col31:
-        var = st.selectbox("Pilih input: ", ["Modal Sebelum Mendapat Geran", "Keuntungan Bulanan"])
+col1, col2 = st.columns(2)
 
+with col1:
+    st.subheader("Modal Sebelum Mendapat Geran")
+
+    idx = "Modal Sebelum Mendapat Geran"
+    
+    col = st.selectbox("Pilih input: ", ["Peralatan/Kewangan yang Diterima", "Keuntungan Bulanan"])
+
+    st.write("Ujian kebebasan pembolehubah menggunakan [Chi-square](https://en.wikipedia.org/wiki/Chi-squared_test)")
+    st.write("**Jadual frekuensi**")
+    result, p, p_text = funcs_2.stats_test(df, idx, col)
+    st.table(result)
+
+    st.markdown(""" Andaian *(H0)*: **%s** tidak bergantung kepada **%s**.""" % (col,idx))
+
+    st.markdown(""" **Interpretasi nilai *p***  
+                Nilai *p* = **%2f**   
+                Interpretasi: *%s*""" % (p, p_text))
 
 
 st.divider()
@@ -137,7 +157,7 @@ with col1:
 
     col11, col12 = st.columns(2)
     with col11:
-        y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
+        y_data = st.selectbox("Pilih input: ", ["Jantina", "Umur", "Negeri", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
     fig = px.histogram(df, x="Sentiment", color=y_data)
     fig.update_layout(yaxis_title="Bilangan") 

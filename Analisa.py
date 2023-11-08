@@ -15,9 +15,6 @@ st.set_page_config(
 st.title("Dashboard Ekosistem Usahawan@KKDW")
 st.sidebar.header("Analisa Data Usahawan")
 
-
-# path = Path("data") / "Data Usahawan.xlsx"
-
 path = "Data Usahawan.xlsx"
 df = funcs_1.process_data(funcs_1.load_dataset(path))
 

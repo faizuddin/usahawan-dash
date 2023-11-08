@@ -18,7 +18,9 @@ st.set_page_config(
 )
 
 st.title("Dashboard Tinjauan Transformasi + Reformasi Ekosistem Usahawan@KKDW")
-st.sidebar.header("Persepsi Masyarakat")
+st.sidebar.header("Data Pelangai 2023")
+
+st.subheader("Tinjauan persepsi masyarakat di Pelangai, Pahang bagi program-program ekosistem Usahawan@KKDW pada 30 September - 1 October 2023")
 
 
 # path = Path("data") / "clean-with-sentiment.csv"

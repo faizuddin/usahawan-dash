@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import funcs_2
 import plotly.express as px
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 
 from pathlib import Path
@@ -49,9 +50,22 @@ with col1:
     with col11:
         y_data = st.selectbox("Pilih input: ", ["Umur", "Negeri", "Bentuk Penyertaan di KUD", "Bidang Perniagaan", "Adakah anda Penerima Manfaat?"])
 
-    fig = px.histogram(df, x="Jantina", color=y_data)
+    fig = px.histogram(df, x="Jantina")
     fig.update_layout(yaxis_title="Bilangan") 
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+    # fig.add_trace(go.Scatter(
+    # x=df.index, 
+    # y=df['count'],
+    # text=df['count'],
+    # mode='text',
+    # textposition='top center',
+    # textfont=dict(
+    #     size=18,
+    # ),
+    # showlegend=False
+# ))
+
 
 with col2:
     st.subheader("Umur")

@@ -150,7 +150,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("Analisa Sentimen")
     st.write(
-    """Carta turus di bawah menunjukkan sentimen masyarakat berdasarkan bentuk penyertaan di Mini KUD Pelangai 2023. 
+    """Carta turus di bawah menunjukkan sentimen masyarakat berdasarkan bentuk penyertaan di program-program sekitar DUN Pelangai. 
     *Pre-trained* model yang dilatih menggunakan [Malaya](https://malaya.readthedocs.io/en/stable/index.html) *Natural Language Processing (NLP) toolkit* 
     telah digunakan untuk menganalisa sentimen dari teks survey pempamer dan pengunjung."""
     )

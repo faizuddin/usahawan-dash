@@ -197,14 +197,15 @@ with tab4:
    st.subheader("Manfaat")
 
    rows = funcs_1.calc_freq(df, "Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)")
-   # tab31, tab32 = st.tabs(["Peratusan", "Bilangan"])
+   rows["Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)"] = rows["Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)"].str.split("-", n=1).str[0]
+   tab31, tab32 = st.tabs(["Peratusan", "Bilangan"])
 
-   # with tab31:
-   #    fig = px.pie(rows, values='Freq', names="Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)")
-   #    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
-   # with tab32:
-   
-   st.markdown("Bilangan penerima manfaat berdasarkan agensi.")
-   fig = px.bar(rows, y="Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)", x="Freq", orientation="h")
-   fig.update_layout(xaxis_title="Bilangan", yaxis_title="Agensi") 
-   st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+   # st.markdown("Bilangan penerima manfaat berdasarkan agensi.")
+
+   with tab31:
+      fig = px.pie(rows, values='Freq', names="Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)")
+      st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+   with tab32:
+      fig = px.bar(rows, y="Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)", x="Freq", orientation="h")
+      fig.update_layout(xaxis_title="Bilangan", yaxis_title="Agensi") 
+      st.plotly_chart(fig, theme="streamlit", use_container_width=True)

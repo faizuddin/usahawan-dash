@@ -14,6 +14,7 @@ st.set_page_config(
 
 unikl_logo = Image.open("images/unikl-logo.png")
 kkdw_logo = Image.open("images/logo-KKDW.png")
+
 with st.sidebar:
    col1, col2 = st.columns(2)
 
@@ -24,13 +25,9 @@ with st.sidebar:
 st.title("Dashboard Ekosistem Usahawan@KKDW")
 st.sidebar.header("Analisa Data Usahawan")
 
-
+# load dataset
 path = "data/kud-putrajaya-231123-1537.csv"
 df = funcs_1.load_dataset(path)
-
-# st.write(df)
-# banner = Image.open("images/kud-putrajaya-2023.jpg")
-# st.image(banner, use_column_width="auto")
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -211,18 +208,3 @@ with tab4:
    fig = px.bar(rows, y="Bahagian, Jabatan, dan Agensi di bawah KKDW pemberi manfaat (boleh lebih daripada 1 jawapan)", x="Freq", orientation="h")
    fig.update_layout(xaxis_title="Bilangan", yaxis_title="Agensi") 
    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
-
-
-# col1, col2  = st.columns(2)
-
-# with col1:
-#    tmp = df["Kategori Usahawan"].value_counts()
-#    fig = px.pie(tmp, values="Kategori Usahawan")
-
-#    st.plotly_chart(fig, theme="streamlit", use_container_width=True, names="Kategori Usahawan", title="Pecahan Mengikut Kategori")
-
-# with col2:
-#    tmp = df["Jantina"].value_counts()
-#    fig = px.pie(tmp, values="Jantina")
-
-#    st.plotly_chart(fig, theme="streamlit", use_container_width=True, names="Jantina", title="Pecahan Mengikut Jantina")

@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import funcs_1
 from PIL import Image
-from streamlit_extras.app_logo import add_logo
 
 import plotly.express as px
 

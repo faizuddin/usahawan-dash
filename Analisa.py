@@ -19,8 +19,8 @@ with st.sidebar:
    col1, col2 = st.columns(2)
 
    with col1:
-      st.image(kkdw_logo, width=250)
-      st.image(unikl_logo, width=220)
+      st.image(kkdw_logo, width=200)
+      st.image(unikl_logo, width=1800)
 
 st.title("Dashboard Ekosistem Usahawan@KKDW")
 st.sidebar.header("Analisa Data Usahawan")

@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 @st.cache_data
 def load_dataset(filepath):
@@ -34,3 +35,13 @@ def calc_freq(dataframe, col):
     freq.columns = [col, "Freq"]
 
     return freq
+
+def process_likert(dataframe, col):
+    dataframe.loc[dataframe[col] == 1, col] = "Sangat Tidak Setuju"
+    dataframe.loc[dataframe[col] == 2, col] = "Tidak Setuju"
+    dataframe.loc[dataframe[col] == 3, col] = "Tidak Setuju atau Setuju"
+    dataframe.loc[dataframe[col] == 4, col] = "Setuju"
+    dataframe.loc[dataframe[col] == 5, col] = "Sangat Setuju"
+
+    return dataframe
+                              

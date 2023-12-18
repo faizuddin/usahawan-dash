@@ -13,7 +13,6 @@ st.set_page_config(
     layout="wide",
 )
 
-
 st.title("Dashboard Ekosistem Usahawan@KKDW")
 st.sidebar.header("Analisa Data Usahawan")
 

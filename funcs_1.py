@@ -39,7 +39,7 @@ def calc_freq(dataframe, col):
 def process_likert(dataframe, col):
     dataframe.loc[dataframe[col] == 1, col] = "Sangat Tidak Setuju"
     dataframe.loc[dataframe[col] == 2, col] = "Tidak Setuju"
-    dataframe.loc[dataframe[col] == 3, col] = "Tidak Setuju atau Setuju"
+    dataframe.loc[dataframe[col] == 3, col] = "Neutral"
     dataframe.loc[dataframe[col] == 4, col] = "Setuju"
     dataframe.loc[dataframe[col] == 5, col] = "Sangat Setuju"
 

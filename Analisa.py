@@ -1,11 +1,13 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 from streamlit_extras.app_logo import add_logo
 import funcs_1
-from PIL import Image
+import funcs_2
+import matplotlib.pyplot as plt
 
 import plotly.express as px
+
+from wordcloud import WordCloud
 
 st.set_page_config(
     page_title="KKDW Dashboard",
@@ -50,10 +52,11 @@ st.divider()
 
 st.header("Demografi Usahawan")
 
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 
 with col1:
    st.subheader("Jantina")
+   st.markdown("Taburan usahawan mengikut jantina.")
 
    rows = funcs_1.calc_freq(df, "Jantina")
    tab1, tab2 = st.tabs(["Peratusan", "Bilangan"])
@@ -64,11 +67,13 @@ with col1:
    
    with tab2:
       fig = px.bar(rows, x='Jantina', y="Freq")
-      fig.update_layout(yaxis_title="Bilangan", bargap=0.2) 
+      fig.update_layout(yaxis_title="Bilangan", bargap=0.2)
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with col2:
    st.subheader("Umur")
+   st.markdown("Taburan usahawan mengikut umur.")
 
    rows = funcs_1.calc_freq(df, "Umur")
    tab1, tab2 = st.tabs(["Peratusan", "Bilangan"])
@@ -82,8 +87,11 @@ with col2:
       fig.update_layout(yaxis_title="Bilangan") 
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-with col3:
+col1, col2 = st.columns(2)
+
+with col1:
    st.subheader("Bangsa")
+   st.markdown("Taburan usahawan mengikut bangsa.")
 
    rows = funcs_1.calc_freq(df, "Bangsa")
    tab1, tab2 = st.tabs(["Peratusan", "Bilangan"])
@@ -96,10 +104,9 @@ with col3:
       fig.update_layout(yaxis_title="Bilangan") 
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-col1, col2, col3 = st.columns(3)
-
-with col1:
+with col2:
    st.subheader("Negeri")
+   st.markdown("Taburan usahawan mengikut negeri.")
 
    rows = funcs_1.calc_freq(df, "Negeri")
    tab1, tab2 = st.tabs(["Peratusan", "Bilangan"])
@@ -112,8 +119,11 @@ with col1:
       fig.update_layout(yaxis_title="Bilangan") 
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-with col2:
+col1, col2 = st.columns(2)
+
+with col1:
    st.subheader("Tahap Pendidikan")
+   st.markdown("Taburan usahawan berdasarkan tahap pendidikan.")
 
    rows = funcs_1.calc_freq(df, "Tahap Pendidikan")
    tab1, tab2 = st.tabs(["Peratusan", "Bilangan"])
@@ -126,9 +136,8 @@ with col2:
       fig.update_layout(yaxis_title="Bilangan") 
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-with col3:
+with col2:
    st.subheader("Status Usahawan")
-
    st.markdown("Usahawan yang sedang/masih menjalankan perniagaan.")
 
    rows = funcs_1.calc_freq(df, "Adakah anda sedang menjalankan perniagaan?")
@@ -141,7 +150,6 @@ with col3:
       fig = px.bar(rows, x="Adakah anda sedang menjalankan perniagaan?", y="Freq")
       fig.update_layout(yaxis_title="Bilangan") 
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
-
 
 st.divider()
 st.header("Maklumat Perniagaan")
@@ -215,7 +223,7 @@ with tab2:
    st.subheader("Jenis Manfaat")
 
    responses = []
-   for r in df["Jenis bantuan / kemudahan yang telah di terima  (boleh lebih daripada 1 jawapan)"]:
+   for r in df["Jenis bantuan / kemudahan yang telah di terima  (boleh lebih daripada 1 jawapan)"].dropna():
       tmp = str(r).split(";")
       responses.extend(tmp)
 
@@ -230,7 +238,7 @@ with tab2:
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
    with tab22:
       fig = px.bar(rows, y="Jenis Manfaat", x="Freq", orientation="h")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(xaxis_title="Bilangan") 
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab3:
@@ -268,7 +276,8 @@ with tab1:
 
    with tab12:
       fig = px.bar(rows, x="Sejauh manakah anda bersetuju bahawa terdapat akses yang terhad kepada pembiayaan modal, infrastruktur, teknologi, peluang latihan, mentorship dan lain-lain?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
@@ -288,7 +297,8 @@ with tab2:
 
    with tab22:
       fig = px.bar(rows, x="Sejauh mana anda percaya bahawa terdapat jurang dalam pendidikan dan kemahiran di kalangan masyarakat kita seperti pembangunan kemahiran, dan keperluan pasaran dan industri?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab3:
@@ -307,7 +317,8 @@ with tab3:
 
    with tab32:
       fig = px.bar(rows, x="Sejauh mana anda merasakan bahawa cabaran sosioekonomi seperti modal dan stigma masyarakat mempengaruhi peluang pembangunan peribadi?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab4:
@@ -326,7 +337,8 @@ with tab4:
 
    with tab42:
       fig = px.bar(rows, x="Sejauh mana anda mengalami kesukaran dalam mendapatkan rangkaian (networking) yang mencukupi untuk perkembangan peribadi atau perniagaan anda?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab5:
@@ -345,7 +357,8 @@ with tab5:
 
    with tab52:
       fig = px.bar(rows, x="Sejauh mana anda percaya bahawa masyarakat kita tidak mempunyai keupayaan bersaing dalam ekonomi global?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab6:
@@ -364,7 +377,8 @@ with tab6:
 
    with tab62:
       fig = px.bar(rows, x="Sejauh mana anda menganggap bahawa halangan perundangan dan peraturan (regulasi) mempengaruhi perkembangan perniagaan atau aktiviti sosial?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab7:
@@ -383,7 +397,8 @@ with tab7:
 
    with tab72:
       fig = px.bar(rows, x="Sejauh mana anda bersetuju bahawa kekurangan wira aspirasi (ikon / mentor / coach) merupakan cabaran utama dalam mencapai matlamat peribadi atau profesional?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5) 
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab8:
@@ -402,7 +417,8 @@ with tab8:
 
    with tab82:
       fig = px.bar(rows, x="Sejauh mana anda melihat kelestarian (sustainability) dan sistem sokongan komprehensif sebagai elemen penting dalam membangunkan komuniti usahawan?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 st.divider()
@@ -426,7 +442,8 @@ with tab1:
 
    with tab12:
       fig = px.bar(rows, x="Sejauh manakah anda bersetuju bahawa program keusahawanan patut di uruskan dengan lebih sistematik merentasi agensi di bawah selian KKDW dan juga di kementerian lain, untuk mengelakkan sebarang bentuk duplikasi (program sama)?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab2:
@@ -445,7 +462,8 @@ with tab2:
 
    with tab22:
       fig = px.bar(rows, x="Sejauh manakah anda percaya bahawa usaha penstrukturan semula patut di ambil terhadap fungsi dan peranan keusahawanan di setiap Bahagian, Jabatan, dan Agensi dalam KKDW?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab3:
@@ -464,7 +482,8 @@ with tab3:
 
    with tab32:
       fig = px.bar(rows, x="Sejauh manakah anda bersetuju bahawa KKDW perlu menyediakan ruang serta sokongan kepada usahawan agar mampu bersaing dan maju dalam perniagaan?", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 with tab4:
@@ -483,10 +502,110 @@ with tab4:
 
    with tab42:
       fig = px.bar(rows, x="Sejauh mana anda bersetuju bahawa KKDW patut memberikan penekanan kepada impak setiap program bagi memastikan hasil pelaburan (Return on Invesment) dikeluarkan kerajaan adalah setimpal.", y="Freq")
-      fig.update_layout(yaxis_title="Bilangan") 
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
       st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 st.divider()
-st.header("Pendapat Usahawan")
-st.subheader("Analisa sentimen")
+st.header("Persepsi Subjektif Usahawan")
+st.markdown("Analisa berikut menunjukkan sentimen persepsi usawahan terhadap Ekosistem Usahawan @ KKDW. *Pre-trained* model yang digunakan untuk menganalisa teks survey usahawan di KUD Putrajaya 2023 telah dilatih menggunakan [Malaya](https://malaya.readthedocs.io/en/stable/index.html) *Natural Language Processing (NLP) toolkit*.")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+   # load prediction model
+   pt_model = st.selectbox("Pilih *pre-trained* model:", ["albert", "tiny-bert"])
+   sent_model = funcs_2.load_model(pt_model)
+
+tab1, tab2 = st.tabs(["Analisa Sentimen", "Awan Perkataan"])
+
+with tab1:
+   st.subheader("Analisa Sentimen")
+
+   df_sent = df[df["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."].notna()]
+
+   preds = sent_model.predict(df_sent["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."].tolist())
+
+   tab11, tab12, tab13 = st.tabs(["Peratusan", "Bilangan", "Ramal Sentimen"])
+
+   df_sent["Sentiment"] = preds
+
+   tmp1 = df_sent[df_sent["Sentiment"]=="positive"]
+   Positif = ''.join(tmp1["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."].astype(str))
+   tmp2 = df_sent[df_sent["Sentiment"]=="neutral"]
+   Neutral = ''.join(tmp2["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."].astype(str))
+   tmp3 = df_sent[df_sent["Sentiment"]=="negative"]
+   Negatif = ''.join(tmp3["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."].astype(str))
+
+   rows = funcs_1.calc_freq(df_sent, "Sentiment")
+
+   with tab11:
+      fig = px.pie(rows, values='Freq', names="Sentiment")
+      st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+   with tab12:
+      fig = px.bar(rows, x="Sentiment", y="Freq")
+      fig.update_layout(yaxis_title="Bilangan")
+      fig.update_traces(width=0.5)
+      st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+   with tab13:
+      st.subheader("Ramal Sentimen")
+      st.markdown("Ramal sentimen dari pendapat-pendapat subjektif usahawan menggunakan model terlatih secara interaktif.")
+      
+      with st.form("sentiment-example"):
+         text = st.selectbox("Pilih pendapat: ", df_sent["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."])
+
+         # Every form must have a submit button.
+         submitted = st.form_submit_button("Ramal pendapat ini")
+
+         if submitted:
+            # do prediction
+            preds = sent_model.predict_proba([text])
+            prob_pos = [p["positive"] for p in preds]
+            prob_neu = [p["neutral"] for p in preds]
+            prob_neg = [p["negative"] for p in preds]
+
+            st.subheader("Hasil Ramalan")
+            st.markdown("Nilai kebarangkalian ramalan sentimen pendapat adalah diantara 0 (tiada keyakinan) dan 1 (keyakinan tertinggi).")
+
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                st.metric(label="😊 Positif", value="%.4f" % prob_pos[0])
+            
+            with col2:
+                st.metric(label="😐 Neutral", value="%.4f" % prob_neu[0])
+            
+            with col3:
+                st.metric(label="🙁 Negatif", value="%.4f" % prob_neg[0])
+
+with tab2:
+   st.subheader("Awan Perkataan")
+   st.markdown("*Wordcloud* di bawah menunjukkan perkataan-perkataan yang digunakan didalam pendapat-pendapat yang dikemukakan oleh usahawan. Size perkataan mewakili frekuensi penggunaan perkataan tersebut di dalam survey.")
+
+   col21, col22 = st.columns(2)
+
+   with col21:
+      topic = st.selectbox('Pilih sentimen: ',["Positif","Neutral","Negatif"])
+
+   # Create and generate a word cloud image:
+   def create_wordcloud(topic):
+      if Positif == "Positif":
+         topic = Positif
+      elif topic == "Neutral":
+         topic = Neutral
+      else:
+         topic = Negatif
+
+      wordcloud = WordCloud(width=800, height=500).generate(topic)
+      return wordcloud
+
+   wordcloud = create_wordcloud(topic)
+
+   # Display the generated wordcloud image:
+   fig, ax = plt.subplots(figsize = (20, 20))
+   ax.imshow(wordcloud, interpolation='bilinear')
+   plt.axis("off")
+   st.pyplot(fig)

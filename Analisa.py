@@ -558,7 +558,7 @@ with tab1:
          text = st.selectbox("Pilih pendapat: ", df_sent["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."])
 
          # Every form must have a submit button.
-         submitted = st.form_submit_button("Ramal pendapat ini")
+         submitted = st.form_submit_button("Ramal sentimen pendapat ini")
 
          if submitted:
             # do prediction
@@ -568,7 +568,7 @@ with tab1:
             prob_neg = [p["negative"] for p in preds]
 
             st.subheader("Hasil Ramalan")
-            st.markdown("Nilai kebarangkalian ramalan sentimen pendapat adalah diantara 0 (tiada keyakinan) dan 1 (keyakinan tertinggi).")
+            st.markdown("Nilai kebarangkalian ramalan sentimen pendapat adalah diantara 0 (model tidak yakin dengan ramalan) dan 1 (model sangat yakin dengan ramalan).")
 
             col1, col2, col3 = st.columns(3)
             

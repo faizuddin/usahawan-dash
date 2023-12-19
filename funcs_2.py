@@ -31,6 +31,4 @@ def stats_test(dataframe, idx, cols):
 def load_model(model_name):
    sent_model = malaya.sentiment.transformer(model=model_name)
    return sent_model
-
-def do_prediction(text, model):
     

@@ -519,9 +519,9 @@ with col1:
    if not custom:
       # list available models
       model_list = funcs_2.list_avail_model().index
-      pt_model = st.selectbox("Pilih model *pra-terlatih*:", model_list)
+      pt_model = st.selectbox("Pilih model *pra-terlatih*:", ["tiny-albert", "albert", "tiny-bert"])
    else:
-      pt_model = "alxlnet"
+      pt_model = "tiny-bert"
    
 with col2:
    on = st.toggle("Guna model ringkas", value=True)

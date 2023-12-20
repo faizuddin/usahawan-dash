@@ -11,7 +11,7 @@ from wordcloud import WordCloud
 
 st.set_page_config(
     page_title="KKDW Dashboard",
-    page_icon="📊",
+    page_icon="assets/favicon.png",
     layout="wide",
 )
 
@@ -521,7 +521,7 @@ with col1:
       model_list = funcs_2.list_avail_model().index
       pt_model = st.selectbox("Pilih model *pra-terlatih*:", ["tiny-albert", "albert", "tiny-bert"])
    else:
-      pt_model = "tiny-bert"
+      pt_model = "albert"
    
 with col2:
    on = st.toggle("Guna model ringkas", value=True)

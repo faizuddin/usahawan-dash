@@ -509,14 +509,32 @@ with tab4:
 
 st.divider()
 st.header("Persepsi Subjektif Usahawan")
-st.markdown("Analisa berikut menunjukkan sentimen persepsi usawahan terhadap Ekosistem Usahawan @ KKDW. *Pre-trained* model yang digunakan untuk menganalisa teks survey usahawan di KUD Putrajaya 2023 telah dilatih menggunakan [Malaya](https://malaya.readthedocs.io/en/stable/index.html) *Natural Language Processing (NLP) toolkit*.")
+st.markdown("Analisa berikut menunjukkan sentimen persepsi usawahan terhadap Ekosistem Usahawan @ KKDW. Model *pra-terlatih* yang digunakan untuk menganalisa teks survey usahawan di KUD Putrajaya 2023 telah dilatih menggunakan [Malaya](https://malaya.readthedocs.io/en/stable/index.html) *Natural Language Processing (NLP) toolkit*.")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-   # load prediction model
-   pt_model = st.selectbox("Pilih *pre-trained* model:", ["albert", "tiny-bert"])
-   sent_model = funcs_2.load_model(pt_model)
+   custom = st.toggle("Guna tetapan lalai", value=True)
+   
+   if not custom:
+      # list available models
+      model_list = funcs_2.list_avail_model().index
+      pt_model = st.selectbox("Pilih model *pra-terlatih*:", model_list)
+   else:
+      pt_model = "alxlnet"
+   
+with col2:
+   on = st.toggle("Guna model ringkas", value=True)
+
+   if on:
+      st.warning("Ketepatan ramalan kemungkinan lebih rendah menggunakan model ringkas", icon="⚠️")
+      quantized = True
+   else:
+      quantized = False
+
+
+# load prediction model
+sent_model = funcs_2.load_model(pt_model, quantized)
 
 tab1, tab2 = st.tabs(["Analisa Sentimen", "Awan Perkataan"])
 
@@ -552,7 +570,7 @@ with tab1:
 
    with tab13:
       st.subheader("Ramal Sentimen")
-      st.markdown("Ramal sentimen dari pendapat-pendapat subjektif usahawan menggunakan model terlatih secara interaktif.")
+      st.markdown("Ramal sentimen dari pendapat-pendapat subjektif usahawan menggunakan model *pra-terlatih* secara interaktif.")
       
       with st.form("sentiment-example"):
          text = st.selectbox("Pilih pendapat: ", df_sent["Sila nyatakan pandangan dan cadangan anda bagi menambahbaik program keusahawanan di bawah KKDW."])

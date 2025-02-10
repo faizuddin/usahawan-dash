@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from streamlit_extras.app_logo import add_logo
 import funcs_1
 import funcs_2
 import matplotlib.pyplot as plt
@@ -10,19 +9,19 @@ import plotly.express as px
 from wordcloud import WordCloud
 
 st.set_page_config(
-    page_title="KKDW Dashboard",
+    page_title="Dashboard",
     page_icon="assets/favicon.png",
     layout="wide",
 )
 
-st.title("Dashboard Ekosistem Usahawan@KKDW")
+st.title("Dashboard Ekosistem Usahawan")
 st.sidebar.header("Analisa Data Usahawan")
 
-def sidebar_logo():
-   add_logo("assets/KKDW-dash-sidebar-logo.png", height=220)
+# def sidebar_logo():
+#    add_logo("assets/KKDW-dash-sidebar-logo.png", height=220)
 
-# add logo
-sidebar_logo()
+# # add logo
+# sidebar_logo()
 
 # load dataset
 path = "data/kud-putrajaya-171223.csv"
@@ -518,23 +517,27 @@ with col1:
    
    if not custom:
       # list available models
-      model_list = funcs_2.list_avail_model().index
-      pt_model = st.selectbox("Pilih model *pra-terlatih*:", ["tiny-albert", "albert", "tiny-bert"])
+      # model_list = funcs_2.list_avail_model()
+      selected_model = st.selectbox("Pilih model *pra-terlatih*:", ["Malaysian cased (tiny)", "Malaysian cased (small)"])
+      if selected_model == "Malaysian cased (tiny)":
+         pt_model = "mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased"
+      else:
+         pt_model = "mesolitica/sentiment-analysis-nanot5-small-malaysian-cased"
    else:
-      pt_model = "albert"
+      pt_model = "mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased"
    
-with col2:
-   on = st.toggle("Guna model ringkas", value=True)
+# with col2:
+#    on = st.toggle("Guna model ringkas", value=True)
 
-   if on:
-      st.warning("Ketepatan ramalan kemungkinan lebih rendah menggunakan model ringkas", icon="⚠️")
-      quantized = True
-   else:
-      quantized = False
+#    if on:
+#       st.warning("Ketepatan ramalan kemungkinan lebih rendah menggunakan model ringkas", icon="⚠️")
+#       quantized = True
+#    else:
+#       quantized = False
 
 
 # load prediction model
-sent_model = funcs_2.load_model(pt_model, quantized)
+sent_model = funcs_2.load_model(pt_model)
 
 tab1, tab2 = st.tabs(["Analisa Sentimen", "Awan Perkataan"])
 

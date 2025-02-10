@@ -29,11 +29,18 @@ def stats_test(dataframe, idx, cols):
 
 @st.cache_resource
 def list_avail_model():
-    model_list = malaya.sentiment.available_transformer()
+    # model_list = malaya.sentiment.available_transformer()
+    model_list = malaya.sentiment.available_huggingface
     return model_list
 
-@st.cache_resource
-def load_model(model_name, quant=True):
-   sent_model = malaya.sentiment.transformer(model=model_name, quantized=quant)
-   return sent_model
+# @st.cache_resource
+# def load_model(model_name, quant=True):
+#    sent_model = malaya.sentiment.huggingface(model=model_name, quantized=quant)
+# #  sent_model = malaya.sentiment.transformer(model=model_name, quantized=quant)
+#    return sent_model
     
+@st.cache_resource
+def load_model(model_name):
+   sent_model = malaya.sentiment.huggingface(model=model_name)
+#  sent_model = malaya.sentiment.transformer(model=model_name, quantized=quant)
+   return sent_model

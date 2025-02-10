@@ -37,6 +37,9 @@ def calc_freq(dataframe, col):
     return freq
 
 def process_likert(dataframe, col):
+    dataframe[col] = dataframe[col].astype('object')
+    # dataframe[col] = dataframe[col].astype('string')
+    
     dataframe.loc[dataframe[col] == 1, col] = "Sangat Tidak Setuju"
     dataframe.loc[dataframe[col] == 2, col] = "Tidak Setuju"
     dataframe.loc[dataframe[col] == 3, col] = "Neutral"

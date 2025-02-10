@@ -17,7 +17,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("Dashboard Tinjauan Transformasi + Reformasi Ekosistem Usahawan@KKDW")
+st.title("Dashboard Tinjauan Transformasi")
 st.sidebar.header("Data Pelangai 2023")
 
 st.subheader("Tinjauan persepsi masyarakat di Pelangai, Pahang bagi program-program ekosistem Usahawan@KKDW pada 30 September - 1 October 2023")
@@ -174,7 +174,7 @@ with col2:
 
     st.subheader("Ramalan Sentimen")
     # load prediction model
-    sent_model = funcs_2.load_model("tiny-bert")
+    sent_model = funcs_2.load_model("mesolitica/sentiment-analysis-nanot5-tiny-malaysian-cased")
     with st.form("sentiment_example"):
         st.write("""Ramal kebarangkalian sentimen komen-komen dari survey pempamer dan pengunjung di Mini KUD Pelangai 2023.
         """)
